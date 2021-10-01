@@ -34,6 +34,7 @@ void VictronComponent::dump_config() {
   LOG_TEXT_SENSOR("  ", "Device Mode", device_mode_text_sensor_);
   LOG_TEXT_SENSOR("  ", "Firmware Version", firmware_version_text_sensor_);
   LOG_TEXT_SENSOR("  ", "Device Type", device_type_text_sensor_);
+  LOG_BINARY_SENSOR("  ", "Load Output State", load_output_state_binary_sensor_);
   check_uart_settings(19200);
 }
 
@@ -213,6 +214,10 @@ static const std::string device_mode_text(int value) {
     default:
       return "Unknown";
   }
+}
+
+static const bool string_to_bool(std::string value) {
+  return (value == "ON");
 }
 
 static const __FlashStringHelper *device_type_text(int value) {
@@ -471,6 +476,9 @@ void VictronComponent::handle_value_() {
   } else if (label_ == "FW") {
     if ((firmware_version_text_sensor_ != nullptr) && !firmware_version_text_sensor_->has_state())
       firmware_version_text_sensor_->publish_state(value_.insert(value_.size() - 2, "."));
+  } else if (label_ == "LOAD") {
+    if ((load_output_state_binary_sensor_ != nullptr) && !load_output_state_binary_sensor_->has_state())
+      load_output_state_binary_sensor_->publish_state(string_to_bool(value_));
   } else if (label_ == "PID") {
     // value = atoi(value_.c_str());
 

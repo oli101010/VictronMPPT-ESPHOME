@@ -61,6 +61,10 @@ for inverters:
 - `warning`
 - `firmware_version`
 
+The available binary sensors are
+for MPPT:
+- `load_output_state`
+
 
 Example for multiple devices:
 ```yaml

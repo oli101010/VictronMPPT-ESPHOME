@@ -3,6 +3,7 @@
 #include "esphome/core/component.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/text_sensor/text_sensor.h"
+#include "esphome/components/binary_sensor/binary_sensor.h"
 #include "esphome/components/uart/uart.h"
 
 namespace esphome {
@@ -66,6 +67,10 @@ class VictronComponent : public uart::UARTDevice, public Component {
   void set_device_type_text_sensor(text_sensor::TextSensor *device_type_text_sensor) {
     device_type_text_sensor_ = device_type_text_sensor;
   }
+  void set_load_output_state_binary_sensor(binary_sensor::BinarySensor *load_output_state_binary_sensor) {
+    load_output_state_binary_sensor_ = load_output_state_binary_sensor;
+  }
+
 
   void dump_config() override;
   void loop() override;
@@ -102,6 +107,8 @@ class VictronComponent : public uart::UARTDevice, public Component {
   text_sensor::TextSensor *device_mode_text_sensor_{nullptr};
   text_sensor::TextSensor *firmware_version_text_sensor_{nullptr};
   text_sensor::TextSensor *device_type_text_sensor_{nullptr};
+
+  binary_sensor::BinarySensor *load_output_state_binary_sensor_{nullptr};
 
   int state_{0};
   std::string label_;
